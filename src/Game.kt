@@ -8,7 +8,7 @@ class Game {
         this.creditsRequired = creditsRequired
     }
 
-    fun swipeCard(card: Card) : String{
+    fun play(card: Card) : String{
         if(creditsRequired > card.creditBalance){
             return "This game requires $creditsRequired, your card has insufficient funds"
         }
