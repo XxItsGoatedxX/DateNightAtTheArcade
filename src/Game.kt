@@ -10,11 +10,11 @@ class Game {
 
     fun play(card: Card) : String{
         if(creditsRequired > card.creditBalance){
-            return "This game requires $creditsRequired, your card has insufficient funds"
+            return "This game requires $$creditsRequired, your card has ${card.creditBalance}"
         }
         val randomTickets = Random.nextInt(1, 100)
         card.creditBalance -= creditsRequired
         card.ticketBalance += randomTickets
-        return "Card: ${card.cardID} Tickets won: $randomTickets Card credit: ${card.creditBalance}"
+        return "Card: ${card.cardID}    Tickets won: $randomTickets    Card credit: ${card.creditBalance}"
     }
 }

@@ -1,5 +1,5 @@
 class Terminal {
-    var candy = PrizeCategory("Candy", 10, 1)
+    var candy = PrizeCategory("Candy", 10, 3)
     var hat = PrizeCategory("Hat", 10, 2)
     var david = PrizeCategory("David", 10, 3)
     var prizes = listOf<PrizeCategory>(candy, david, hat)
@@ -34,23 +34,33 @@ class Terminal {
         return card.creditBalance
     }
 
-    fun requestPrize(prizename: String, card: Card): String {
+    fun requestPrize(prizeName: String, card: Card): String {
         var prize = PrizeCategory()
-        if (findPrize(prizename).name == "") {
-            prize = findPrize(prizename)
+        if (findPrize(prizeName).name != "") {
+            prize = findPrize(prizeName)
+            if (prize.count > 0) {
+                if (card.ticketBalance < prize.ticketsRequired) {
+                    return "Invalid ticket amount"
+                } else {
+                    card.ticketBalance -= prize.ticketsRequired
+                    prize.count--
+                    return "Congratulations!! Here is your ${prize.name}"
+                }
+            }
+            else{
+                return "${prize.name} is out of stock"
+            }
         }
-        if (card.ticketBalance <= prize.ticketsRequired) {
-            return "Invalid ticket amount"
-        } else {
-            card.ticketBalance -= prize.ticketsRequired
-            return "Congratulations!! Here is your ${prize.name}"
+        else {
+            return "Prize does not exist!"
         }
+
     }
     //Find a prize by name
     fun findPrize(prizeName: String): PrizeCategory {
-        for (prizeCategory in prizes) {
-            if (prizeCategory.name == prizeName) {
-                return prizeCategory
+        for (prize in prizes) {
+            if (prize.name == prizeName) {
+                return prize
             }
 
         }
